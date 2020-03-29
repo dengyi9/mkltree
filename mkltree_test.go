@@ -114,16 +114,9 @@ func TestProof(t *testing.T) {
 	bIndex := 1
 	path := mklTree.Path(bIndex)
 
-	expectedPath := [][]byte{
-		[]byte{99, 111, 105, 110, 95, 48, 58, 32, 65, 45, 62, 66, 227, 176, 196, 66, 152, 252, 28, 20, 154, 251, 244, 200, 153, 111, 185, 36, 39, 174, 65, 228, 100, 155, 147, 76, 164, 149, 153, 27, 120, 82, 184, 85},
-		[]byte{181, 148, 218, 234, 237, 156, 240, 120, 168, 23, 137, 149, 231, 4, 206, 38, 210, 69, 30, 171, 182, 145, 85, 240, 87, 113, 208, 136, 86, 76, 53, 62},
-	}
-	if !reflect.DeepEqual(path, expectedPath) {
-		t.Errorf("path is not correct. Expected:%v, Got:%v\n", expectedPath, path)
-	}
-
 	// receiver C uses Proof function to verify
-	if !Proof(b, bIndex, root, path, mklTree.hasher) {
+	ok := Proof(b, bIndex, root, path, mklTree.hasher)
+	if !ok {
 		t.Error("proof fails.")
 	}
 }
