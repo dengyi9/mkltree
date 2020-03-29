@@ -9,7 +9,7 @@ import (
 // You can choose whether to store blocks in this merkle tree, if yes, it
 // will cause more memory. You can only build a tree once.
 // If you want a new tree, try to build a new one.
-type mklTree struct {
+type MklTree struct {
 	hasher hash.Hash
 
 	hashes [][][]byte
@@ -17,13 +17,13 @@ type mklTree struct {
 }
 
 // NewMklTree return an merkle tree with default hash method sha256
-func NewMklTree(blocks [][]byte, storeBlocks bool) *mklTree {
+func NewMklTree(blocks [][]byte, storeBlocks bool) *MklTree {
 	return NewMklTreeCustomHash(blocks, storeBlocks, sha256.New())
 }
 
 // NewMklTreeCustomHash return an empty merkle tree with inputted hash method
-func NewMklTreeCustomHash(blocks [][]byte, storeBlocks bool, h hash.Hash) *mklTree {
-	m := &mklTree{
+func NewMklTreeCustomHash(blocks [][]byte, storeBlocks bool, h hash.Hash) *MklTree {
+	m := &MklTree{
 		h,
 		[][][]byte{},
 		[][]byte{},
@@ -68,7 +68,7 @@ func NewMklTreeCustomHash(blocks [][]byte, storeBlocks bool, h hash.Hash) *mklTr
 
 //TODO: implement Add and Build methods, to allow incrementally reading big file's block to build a hash tree.
 
-func (m *mklTree) Root() []byte {
+func (m *MklTree) Root() []byte {
 	// last level element, which should only contain one, if not empty.
 	if (len(m.hashes)) > 0 {
 		return m.hashes[len(m.hashes)-1][0]

@@ -1,25 +1,39 @@
 package mkltree
 
 import (
+	"bytes"
 	"hash"
 	"log"
 )
 
 // Proof the original leaf Block is in the blockIndex of the merkle tree whose root hash
 // is known by user already.
-func Proof(leafBlock []byte,
-	leafBlockIndex int,
-	merkleRoot []byte,
-	merkleHashPath [][]byte,
-	hasher hash.Hash) bool {
+func Proof(leafBlock []byte, leafBlockIndex int,
+	merkleRoot []byte, merkleHashPath [][]byte, hasher hash.Hash) bool {
+
 	hasher.Reset()
 
-	return false
+	thisHash := hasher.Sum(leafBlock)
+	thisIndex := leafBlockIndex
+	for i, broHash := range merkleHashPath {
+
+		log.Printf("merkle-tree index[%v, %v] thisHash: %v\n", i, thisIndex, thisHash)
+
+		//TODO: thisHash is left or right? according to thisIndex
+		if thisIndex % 2 == 0 { // this is Left
+
+			thisHash = hasher.Sum(append(thisHash, broHash...))
+		} else {
+			thisHash = hasher.Sum(append(broHash, thisHash...))
+		}
+		thisIndex = thisIndex / 2
+	}
+
+	return bytes.Equal(thisHash, merkleRoot)
 }
 
 // return relevant merkle tree hash path, from leaf to root.
-// TODO
-func (m *mklTree) Path(blockIndex int) [][]byte {
+func (m *MklTree) Path(blockIndex int) [][]byte {
 	path := [][]byte{}
 
 	for i, hashes := range m.hashes {
@@ -42,7 +56,7 @@ func (m *mklTree) Path(blockIndex int) [][]byte {
 	return path
 }
 
-func (m *mklTree) pathBrother(blockIndex int) int {
+func (m *MklTree) pathBrother(blockIndex int) int {
 	if blockIndex % 2 != 0 {
 		return blockIndex - 1
 	}  else {

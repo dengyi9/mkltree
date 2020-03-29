@@ -9,16 +9,16 @@ import (
 )
 
 // print Hash Tree structure. Hash bytes are encoded in BASE64, separated by character ""
-func (m *mklTree) String() string {
+func (m *MklTree) String() string {
 	return m.stringProc(base64Encode)
 }
 
-func (m *mklTree) StringBytes() string {
+func (m *MklTree) StringBytes() string {
 	return m.stringProc(rawBytesEncode)
 }
 
 // print Hash Tree structure. Hash bytes are encoded in encodeFunc, separated by character ""
-func (m *mklTree) stringProc(encodeFunc func([]byte) []byte) string {
+func (m *MklTree) stringProc(encodeFunc func([]byte) []byte) string {
 	bf := bytes.NewBuffer(nil)
 	encodeFuncName := runtime.FuncForPC(reflect.ValueOf(encodeFunc).Pointer()).Name()
 
@@ -35,7 +35,7 @@ func (m *mklTree) stringProc(encodeFunc func([]byte) []byte) string {
 	return bf.String()
 }
 
-func (m *mklTree) writeBlocks(encodeFunc func([]byte) []byte, bf *bytes.Buffer, blocks [][]byte) {
+func (m *MklTree) writeBlocks(encodeFunc func([]byte) []byte, bf *bytes.Buffer, blocks [][]byte) {
 	for _, h := range blocks {
 		b64hash := encodeFunc(h)
 

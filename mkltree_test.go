@@ -13,7 +13,7 @@ const (
 	block_2 = "coin_2: B->D"
 )
 
-func buildTree() *mklTree {
+func buildTree() *MklTree {
 	// input data, compute hashes, and build merkle hash tree
 	blocks := [][]byte{
 		[]byte(block_0),
