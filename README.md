@@ -1,6 +1,6 @@
 # mkltree
 
-**merkle tree** library implemented by Go language.   
+**merkle tree** library implemented in Go language.   
 
 ## Feature
 - [x] build tree when initialized
