@@ -35,7 +35,7 @@ func NewMklTreeCustomHash(blocks [][]byte, storeBlocks bool, h hash.Hash) *MklTr
 		if storeBlocks {
 			m.blocks = append(m.blocks, b)
 		}
-		bhash := m.hasher.Sum(b)
+		bhash := hashProc(m.hasher, b)
 		leafLevelHashes = append(leafLevelHashes, bhash)
 	}
 	m.hashes = append(m.hashes, leafLevelHashes)
@@ -54,9 +54,7 @@ func NewMklTreeCustomHash(blocks [][]byte, storeBlocks bool, h hash.Hash) *MklTr
 					right = hashes[rightI]
 				}
 
-				m.hasher.Write(left)
-				newHash := m.hasher.Sum(right)
-				m.hasher.Reset()
+				newHash := hashProc(m.hasher, append(left, right...))
 				nextLevelHashes = append(nextLevelHashes, newHash)
 			}
 			m.hashes = append(m.hashes, nextLevelHashes)
@@ -74,4 +72,11 @@ func (m *MklTree) Root() []byte {
 		return m.hashes[len(m.hashes)-1][0]
 	}
 	return []byte{}
+}
+
+func hashProc(hasher hash.Hash, block []byte)  []byte {
+	hasher.Reset()
+	hasher.Write(block)
+	defer hasher.Reset()
+	return hasher.Sum(nil)
 }
