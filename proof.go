@@ -3,7 +3,6 @@ package mkltree
 import (
 	"bytes"
 	"hash"
-	"log"
 )
 
 // Proof the original leaf Block is in the blockIndex of the merkle tree whose root hash
@@ -13,9 +12,9 @@ func Proof(leafBlock []byte, leafBlockIndex int,
 
 	thisHash := hashProc(hasher, leafBlock)
 	thisIndex := leafBlockIndex
-	for i, broHash := range merkleHashPath {
+	for _, broHash := range merkleHashPath {
 
-		log.Printf("merkle-tree level:%v, thisIndex: %v, thisHash: %v, broHash: %v\n", i, thisIndex, thisHash, broHash)
+		//log.Printf("merkle-tree level:%v, thisIndex: %v, thisHash: %v, broHash: %v\n", i, thisIndex, thisHash, broHash)
 
 		//TODO: thisHash is left or right? according to thisIndex
 		if thisIndex % 2 == 0 { // this is Left, same mechanism as method (m *MklTree) blockBrotherIndex
@@ -41,7 +40,7 @@ func (m *MklTree) Path(leafBlockIndex int) [][]byte {
 		}
 
 		broIndex := m.blockBrotherIndex(thisIndex)
-		log.Printf("thisBlockIndex:%v, get merkle-tree index [%v, %v]\n", thisIndex, i, broIndex)
+		//log.Printf("thisBlockIndex:%v, get merkle-tree index [%v, %v]\n", thisIndex, i, broIndex)
 
 		if broIndex < len(hashes) {
 			path = append(path, hashes[broIndex])

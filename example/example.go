@@ -36,5 +36,10 @@ func main() {
 
 	// receiver C uses Proof function to verify if block b is in this merkle tree
 	bExisted := mkltree.Proof(b, bIndex, root, path, hasher)
-	fmt.Printf("Block b '%s' is existed in %v leaf of merkle tree: %v", b, bIndex, bExisted)
+	fmt.Printf("Block b '%s' is existed in %v leaf of merkle tree: %v\n", b, bIndex, bExisted)
+
+	// receiver C proof a fake block, not existed in merkle tree. Only one more space added.
+	bFake := []byte(block_1 + " ")
+	bNotExisted := mkltree.Proof(bFake, bIndex, root, path, hasher)
+	fmt.Printf("Block bFake '%s' is existed in %v leaf of merkle tree: %v\n", bFake, bIndex, bNotExisted)
 }
