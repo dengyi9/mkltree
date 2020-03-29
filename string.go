@@ -8,7 +8,7 @@ import (
 	"runtime"
 )
 
-// print Hash Tree structure. Hash bytes are encoded in BASE64, separated by character ""
+// print Hash Tree structure. Hash bytes are encoded in BASE64, separated by character comma ','
 func (m *MklTree) String() string {
 	return m.stringProc(base64Encode)
 }
@@ -17,7 +17,7 @@ func (m *MklTree) StringBytes() string {
 	return m.stringProc(rawBytesEncode)
 }
 
-// print Hash Tree structure. Hash bytes are encoded in encodeFunc, separated by character ""
+// print Hash Tree structure. Hash bytes are encoded in encodeFunc, separated by character comma ','
 func (m *MklTree) stringProc(encodeFunc func([]byte) []byte) string {
 	bf := bytes.NewBuffer(nil)
 	encodeFuncName := runtime.FuncForPC(reflect.ValueOf(encodeFunc).Pointer()).Name()
