@@ -123,3 +123,25 @@ func TestProof(t *testing.T) {
 		t.Error("proof fails.")
 	}
 }
+
+
+func TestProofFake(t *testing.T) {
+	mklTree := buildTree()
+	fmt.Println(mklTree.StringBytes())
+	// after tranctions happened,
+	// receiver try to proof/verify if sender really send him a coin.
+
+	// receiver C knows
+	root := mklTree.Root() // root hash is public
+
+	// sender B tells receiver C. Comes from to a full node.
+	b := []byte(block_1 + " ") // incorrect block info
+	bIndex := 1
+	path := mklTree.Path(bIndex)
+
+	// receiver C uses Proof function to verify
+	shouldFalse := Proof(b, bIndex, root, path, mklTree.hasher)
+	if shouldFalse == true {
+		t.Error("proof fails.")
+	}
+}
