@@ -15,7 +15,7 @@ func main() {
 		[]byte(block_1),
 		[]byte(block_2),
 	}
-
+	// transactions happen in a system like bitcoin
 	mtree := mkltree.NewMklTree(blocks, true)
 
 	fmt.Printf("%v\n", mtree)        // show tree
@@ -29,7 +29,7 @@ func main() {
 	root := mtree.Root()   // root hash is public
 	hasher := sha256.New() // hash method is public known. It is a contrast in a specific system like bitcoin
 
-	// receiver C gets. Could come from untrustable source, e.g. sender B tells him.
+	// receiver C gets. Could come from untrustable source, e.g. sender B tells him, or gets from any full node.
 	b := []byte(block_1)
 	bIndex := 1
 	path := mtree.Path(bIndex)
