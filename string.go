@@ -13,11 +13,11 @@ func (m *MklTree) String() string {
 	return m.stringProc(base64Encode)
 }
 
+// print Hash Tree structure. Hash bytes are encoded as corresponding integers(0-255), separated by character comma ','
 func (m *MklTree) StringBytes() string {
 	return m.stringProc(rawBytesEncode)
 }
 
-// print Hash Tree structure. Hash bytes are encoded in encodeFunc, separated by character comma ','
 func (m *MklTree) stringProc(encodeFunc func([]byte) []byte) string {
 	bf := bytes.NewBuffer(nil)
 	encodeFuncName := runtime.FuncForPC(reflect.ValueOf(encodeFunc).Pointer()).Name()
