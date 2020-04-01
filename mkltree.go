@@ -1,3 +1,4 @@
+// Merkle Tree library
 package mkltree
 
 import (
@@ -21,7 +22,7 @@ func NewMklTree(blocks [][]byte, storeBlocks bool) *MklTree {
 	return NewMklTreeCustomHash(blocks, storeBlocks, sha256.New())
 }
 
-// NewMklTreeCustomHash return an empty merkle tree with inputted hash method
+// NewMklTreeCustomHash return an merkle tree with customized hash method
 func NewMklTreeCustomHash(blocks [][]byte, storeBlocks bool, h hash.Hash) *MklTree {
 	m := &MklTree{
 		h,
