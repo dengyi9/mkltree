@@ -30,7 +30,7 @@ func NewMklTreeCustomHash(blocks [][]byte, storeBlocks bool, h hash.Hash) *MklTr
 		[][]byte{},
 	}
 
-	// build hash tree // TODO: move to Add method
+	// build leaf hashes  // TODO: move to Add method
 	leafLevelHashes := [][]byte{}
 	for _, b := range blocks {
 		if storeBlocks {
@@ -42,7 +42,7 @@ func NewMklTreeCustomHash(blocks [][]byte, storeBlocks bool, h hash.Hash) *MklTr
 	m.hashes = append(m.hashes, leafLevelHashes)
 
 	// TODO: move to Build method
-	// hash into tree structure, leaf to root, bottom-up
+	// hash into tree structure, from leaf to root, bottom-up
 	for i := 0; i < len(m.hashes); i++ {
 		hashes := m.hashes[i]
 		if len(hashes) > 1 {
